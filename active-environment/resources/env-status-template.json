@@ -1,0 +1,17 @@
+{
+  "audit": {
+    "type": "url",
+    "params": {
+      "regex": "^hpda-elb-(([^-]*)-([^-]*))-([^.]*).([^.]*).(.*)$",
+      "url": ""
+    },
+    "environments": [
+      {
+        "name": "",
+        "last-time-active": "",
+        "became-active": "",
+        "active": false
+      }
+    ]
+  }
+}
