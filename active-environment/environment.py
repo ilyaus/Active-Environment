@@ -1,14 +1,6 @@
 import socket
-import re
 from datetime import datetime
-
-
-def do_match(regex, string, group_idx=1):
-    match = re.search(regex, string)
-    if match:
-        return match.group(group_idx)
-
-    return ""
+import xli_utilities as utils
 
 
 def set_all_inactive(environments):
@@ -100,4 +92,4 @@ def find_active_by_type(audit_config):
 def find_active_by_url(params):
     host_info = socket.gethostbyname_ex(params['url'])
 
-    return do_match(params['regex'], host_info[0])
+    return utils.do_match(params['regex'], host_info[0], params['match_group'])
