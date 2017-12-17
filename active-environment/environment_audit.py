@@ -1,16 +1,17 @@
 import environment
-import xli_utilities as utils
 import s3
 
 
-AWS_PROFILE = 'tapps'
-AWS_REGION = 'us-east-1'
-S3_BUCKET = 'st-halo-audit'
+AWS_PROFILE = ''
+AWS_REGION = ''
+S3_BUCKET = ''
 ENV_STATUS_KEY = 'audit-config.json'
+ENV_STATUS_KEY_RESULT = 'audit-config.json'
 
 
 def run(event, context):
-    pass
+    s3_obj = s3.AwsS3(s3=S3_BUCKET)
+    s3_obj.put_json(ENV_STATUS_KEY_RESULT, environment.audit(s3_obj.get_json(ENV_STATUS_KEY)))
 
 
 def main():

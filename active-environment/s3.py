@@ -7,8 +7,8 @@ import xli_utilities as utils
 
 
 class AwsS3:
-    _aws_profile = "default"
-    _aws_region = "us-east=1"
+    _aws_profile = ""
+    _aws_region = ""
 
     _s3_bucket = ""
     _s3_base_key = ""
@@ -59,6 +59,7 @@ class AwsS3:
                 response['Body'].close()
 
         except Exception as ex:
+            print("Failed: {0}".format(ex))
             if not inspect.isclass(type(ex)):
                 raise ex
 
