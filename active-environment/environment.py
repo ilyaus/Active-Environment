@@ -3,6 +3,52 @@ from datetime import datetime
 import xli_utilities as utils
 
 
+def audit(config):
+    """
+    config is predefined JSON object which must contain the following objects:
+    - audit        : defines how audit is perfomred
+    - environments : defines environments
+    
+    :param config: 
+    :return: 
+    """
+    active_env = find_active(config)
+
+    config['environments'] = update_environments(config['environments'], active_env)
+
+    return config
+
+
+def minify(environment):
+    """
+    environment is predefined JSON object.  Each object must contain at least these keys:
+    - name              : used to identify environment
+    - active            : indicates if environment is currently active
+    - became-active     : ISO timestamp when environment became active
+    - last-time-active  : ISO timestamp when environment was active last (last audit time)
+    - region            : Active region name
+    
+    this function returns object with just those keys (all other keys are removed)
+
+    :param environment: 
+    :return: 
+    """
+    ret_val = {}
+
+    try:
+        ret_val['name'] = environment['name']
+        ret_val['active'] = environment['active']
+        ret_val['became-active'] = environment['became-active']
+        ret_val['last-time-active'] = environment['last-time-active']
+        ret_val['region'] = environment['region']
+    except KeyError as ex:
+        print("ERROR: required key is not present ({0})".format(ex))
+    except Exception as ex:
+        print("Error: {0}".format(ex))
+
+    return ret_val
+
+
 def set_all_inactive(environments):
     for e in environments:
         e['active'] = False
@@ -54,6 +100,7 @@ def update_environments(environments, active_env):
     - active            : indicates if environment is currently active
     - became-active     : ISO timestamp when environment became active
     - last-time-active  : ISO timestamp when environment was active last (last audit time)
+    - region            : Active region name
 
     Only one environment in the list can be active
         
@@ -64,20 +111,14 @@ def update_environments(environments, active_env):
 
     current_active_env = get_current_active_environment(environments)
 
+    print("Current active: {0}".format(current_active_env))
+
     if 'name' in current_active_env and current_active_env['name'] == active_env:
         ret_val = update_last_active(environments)
     else:
         ret_val = update_became_active(environments, active_env)
 
     return ret_val
-
-
-def audit(config):
-    active_env = find_active(config)
-
-    config['environments'] = update_environments(config['environments'], active_env)
-
-    return config
 
 
 def find_active(config):

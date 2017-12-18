@@ -13,14 +13,14 @@
       "last-time-active": "2017-12-13T23:00:52.502112",
       "became-active": "2017-12-13T22:59:33.547895",
       "active": false,
-      "data-center": "us-west-2"
+      "region": "us-west-2"
     },
     {
       "name": "prodab",
       "last-time-active": "2017-12-13T23:00:52.502112",
       "became-active": "2017-12-13T22:59:33.547895",
       "active": false,
-      "data-center": "us-west-1"
+      "region": "us-west-1"
 
     },
     {
@@ -28,7 +28,7 @@
       "last-time-active": "2017-12-13T23:00:52.502112",
       "became-active": "2017-12-13T22:59:33.547895",
       "active": false,
-      "data-center": "us-east-1"
+      "region": "us-east-1"
     }
   ]
 }

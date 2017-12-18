@@ -1,0 +1,38 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+    "DynamoDBName": {
+      "Description": "DynamoDB Table Name",
+      "Type": "String",
+      "Default": "EnvironmentAudit",
+      "MinLength": "1",
+      "MaxLength": "25"
+    }
+  },
+  "Resources": {
+    "dynamodbTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "TableName": {
+          "Ref": "DynamoDBName"
+        },
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "AuditDate",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "AuditDate",
+            "KeyType": "HASH"
+          }
+        ],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": "1",
+          "WriteCapacityUnits": "1"
+        }
+      }
+    }
+  }
+}
