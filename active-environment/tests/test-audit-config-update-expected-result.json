@@ -1,0 +1,33 @@
+{
+  "audit": {
+    "type": "url",
+    "params": {
+      "regex": "^www.([^.]*).([^.]*).(.*)$",
+      "match_group": 2,
+      "url": "www.netflix.com"
+    }
+  },
+  "environments": [
+    {
+      "name": "prodaa",
+      "last-time-active": "2000-01-02T01:00:00.00000",
+      "became-active": "2000-01-01T01:00:00.00000",
+      "active": true,
+      "region": "us-west-2"
+    },
+    {
+      "name": "prodab",
+      "last-time-active": "",
+      "became-active": "",
+      "active": false,
+      "region": "us-west-1"
+    },
+    {
+      "name": "prodac",
+      "last-time-active": "",
+      "became-active": "",
+      "active": false,
+      "region": "us-east-1"
+    }
+  ]
+}

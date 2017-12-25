@@ -8,7 +8,7 @@ AWS_PROFILE = ''
 AWS_REGION = ''
 S3_BUCKET = ''
 ENV_STATUS_KEY = 'audit-config.json'
-ENV_STATUS_KEY_RESULT = 'audit-config.json'
+ENV_STATUS_KEY_RESULT = 'audit-config-result.json'
 DB_TABLE_NAME = ''
 
 

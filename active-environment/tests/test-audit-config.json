@@ -10,23 +10,23 @@
   "environments": [
     {
       "name": "prodaa",
-      "last-time-active": "2017-12-13T23:00:52.502112",
-      "became-active": "2017-12-13T22:59:33.547895",
+      "last-time-active": "",
+      "became-active": "",
       "active": false,
       "region": "us-west-2"
     },
     {
       "name": "prodab",
-      "last-time-active": "2017-12-13T23:00:52.502112",
-      "became-active": "2017-12-13T22:59:33.547895",
+      "last-time-active": "",
+      "became-active": "",
       "active": false,
       "region": "us-west-1"
 
     },
     {
       "name": "prodac",
-      "last-time-active": "2017-12-13T23:00:52.502112",
-      "became-active": "2017-12-13T22:59:33.547895",
+      "last-time-active": "",
+      "became-active": "",
       "active": false,
       "region": "us-east-1"
     }

@@ -3,18 +3,19 @@ from datetime import datetime
 import xli_utilities as utils
 
 
-def audit(config):
+def audit(config, timestamp=datetime.utcnow().isoformat()):
     """
     config is predefined JSON object which must contain the following objects:
-    - audit        : defines how audit is perfomred
+    - audit        : defines how audit is performed
     - environments : defines environments
     
     :param config: 
+    :param timestamp
     :return: 
     """
     active_env = find_active(config)
 
-    config['environments'] = update_environments(config['environments'], active_env)
+    config['environments'] = update_environments(config['environments'], active_env, timestamp)
 
     return config
 
@@ -71,29 +72,35 @@ def get_current_active_environment(environments):
     return ret_val
 
 
-def update_last_active(environments):
+def update_last_active(environments, timestamp):
+    """
+
+    :param environments: 
+    :param timestamp: 
+    :return: 
+    """
     ret_val = environments.copy()
 
     for e in ret_val:
         if e['active']:
-            e['last-time-active'] = datetime.utcnow().isoformat()
+            e['last-time-active'] = timestamp
 
     return ret_val
 
 
-def update_became_active(environments, env_name):
+def update_became_active(environments, env_name, timestamp):
     ret_val = set_all_inactive(environments.copy())
 
     for e in ret_val:
         if e['name'] == env_name:
-            e['last-time-active'] = datetime.utcnow().isoformat()
-            e['became-active'] = datetime.utcnow().isoformat()
+            e['last-time-active'] = timestamp
+            e['became-active'] = timestamp
             e['active'] = True
 
     return ret_val
 
 
-def update_environments(environments, active_env):
+def update_environments(environments, active_env, timestamp):
     """
     environments is predefined JSON list.  Each object must contain at least these keys:
     - name              : used to identify environment
@@ -106,17 +113,16 @@ def update_environments(environments, active_env):
         
     :param environments: 
     :param active_env: 
+    :param timestamp:
     :return: 
     """
 
     current_active_env = get_current_active_environment(environments)
 
-    print("Current active: {0}".format(current_active_env))
-
     if 'name' in current_active_env and current_active_env['name'] == active_env:
-        ret_val = update_last_active(environments)
+        ret_val = update_last_active(environments, timestamp)
     else:
-        ret_val = update_became_active(environments, active_env)
+        ret_val = update_became_active(environments, active_env, timestamp)
 
     return ret_val
 
