@@ -3,7 +3,7 @@ from datetime import datetime
 import xli_utilities as utils
 
 
-def audit(config, timestamp=datetime.utcnow().isoformat()):
+def audit(config, timestamp='now'):
     """
     config is predefined JSON object which must contain the following objects:
     - audit        : defines how audit is performed
@@ -13,6 +13,10 @@ def audit(config, timestamp=datetime.utcnow().isoformat()):
     :param timestamp
     :return: 
     """
+
+    if timestamp == 'now':
+        timestamp = datetime.utcnow().isoformat()
+
     active_env = find_active(config)
 
     config['environments'] = update_environments(config['environments'], active_env, timestamp)
@@ -79,7 +83,7 @@ def update_last_active(environments, timestamp):
     :param timestamp: 
     :return: 
     """
-    ret_val = environments.copy()
+    ret_val = environments
 
     for e in ret_val:
         if e['active']:
@@ -89,7 +93,7 @@ def update_last_active(environments, timestamp):
 
 
 def update_became_active(environments, env_name, timestamp):
-    ret_val = set_all_inactive(environments.copy())
+    ret_val = set_all_inactive(environments)
 
     for e in ret_val:
         if e['name'] == env_name:

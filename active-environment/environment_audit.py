@@ -26,6 +26,11 @@ def set_var(var):
 
 
 def get_variables():
+    """
+    Needed external variables are defined in a dictionary, they will be set from environment
+    variables or defined as global variables.
+    :return: 
+    """
     local_vars = {
         'AWS_PROFILE': '',
         'AWS_REGION': '',
@@ -42,6 +47,16 @@ def get_variables():
 
 
 def run(event, context):
+    """
+    Basic algorithm:
+    1. Read existing audit data from S3 bucket (location defined as S3_BUCKET and ENV_STATUS_KEY)
+    2. Determine currently active environment
+    3. Save updated data to the S3 using same bucket and key
+    4. Add audit results to DynamoDB
+    :param event: 
+    :param context: 
+    :return: 
+    """
     local_vars = get_variables()
 
     s3_obj = s3.AwsS3(s3=local_vars['S3_BUCKET'])
@@ -50,13 +65,6 @@ def run(event, context):
     audit_data = environment.audit(s3_obj.get_json(local_vars['ENV_STATUS_KEY']))
     active_environment = environment.minify(environment.get_current_active_environment(audit_data['environments']))
 
-    s3_obj.put_json(ENV_STATUS_KEY_RESULT, audit_data)
+    s3_obj.put_json(local_vars['ENV_STATUS_KEY'], audit_data)
     ddb_obj.save_audit(active_environment['last-time-active'].split('T')[0], active_environment)
 
-
-def main():
-    pass
-
-
-if __name__ == "__main__":
-    main()

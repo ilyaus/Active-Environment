@@ -11,7 +11,7 @@ import s3
 import dynamo_db
 
 
-class MyTestCase(unittest.TestCase):
+class ActiveEnvironmentTestCase(unittest.TestCase):
     AWS_PROFILE = 'tapps'
     AWS_REGION = 'us-east-1'
     S3_BUCKET = 'st-halo-audit'
